@@ -36,6 +36,7 @@ class MovieInfoView: UIView {
         imageView.backgroundColor = .clear
         imageView.clipsToBounds = true
         
+        ImageHelper.setupImageForView(imageView, imagePath: movieModel.posterPath)
         return imageView
     }()
     
