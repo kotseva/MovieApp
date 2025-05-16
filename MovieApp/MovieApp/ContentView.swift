@@ -7,15 +7,19 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+struct ContentView: UIViewControllerRepresentable {
+    
+    func updateUIViewController(_ uiViewController: UINavigationController, context: Context) {
+        //
+    }
+    
+    @Environment(\.managedObjectContext) private var viewContext
+    
+    func makeUIViewController(context: Context) -> UINavigationController {
+        let tabBarController = HomeTabBarController(viewContext)
+        let navController = UINavigationController(rootViewController: tabBarController)
+        navController.setNavigationBarHidden(true, animated: false)
+        return navController
     }
 }
 
