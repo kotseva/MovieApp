@@ -98,22 +98,28 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
             return UICollectionViewCell()
         }
 
-        viewModel.checkAndHandleIfPaginationRequired(at: indexPath.row)
-
         if let movieModel = viewModel.movieInfoModel(at: indexPath.row) {
             cell.configure(with: movieModel)
         }
 
         return cell
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.size.height
+
+        if offsetY > contentHeight - height * 1.5 {
+            Task {
+                await viewModel.checkAndHandleIfPaginationRequired(at: viewModel.moviesCount() - 1)
+            }
+        }
+    }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.bounds.width - 20
-        return CGSize(width: width, height: 100) // Adjust height as needed
+        return CGSize(width: width, height: 100)
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        <#code#>
-//    }
 }
 

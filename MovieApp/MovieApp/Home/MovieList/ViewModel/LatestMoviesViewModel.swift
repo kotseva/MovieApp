@@ -23,7 +23,8 @@ class NowPlayingViewDataModel {
 
 // MARK: - ViewModel
 public class NowPlayingViewModel: MovieListViewModelProtocol {
-
+    var isPaginating: Bool
+    
     weak var viewController: MovieListViewControllerProtocol?
     private var isLoading: Bool
     private let dataModel: NowPlayingViewDataModel
@@ -36,6 +37,7 @@ public class NowPlayingViewModel: MovieListViewModelProtocol {
         dataModel = NowPlayingViewDataModel()
         managedObjectContext = moc
         isLoading = true
+        isPaginating = false
     }
     
     func fetchNowPlayingData() async {
@@ -48,21 +50,6 @@ public class NowPlayingViewModel: MovieListViewModelProtocol {
             updateViewWithCachedMovieList()
         }
     }
-
-//    func fetchNowPlayingData() async {
-//        do {
-//            let result = try await networkManager.fetchNowPlaying(page: 1)
-//            guard let nowPlayingModel = result else {
-//                self.updateViewWithCachedMovieList()
-//                return
-//            }
-//            self.handleNowPlayingResult(nowPlayingModel: nowPlayingModel)
-//        } catch {
-//            
-//            //TODO: Alert: Error occured with possible refresh option
-//            print("Failed to fetch: \(error)")
-//        }
-//    }
     
     func loadViewInitialData() async {
         await fetchNowPlayingData()
@@ -73,7 +60,6 @@ public class NowPlayingViewModel: MovieListViewModelProtocol {
         addMovieInfoModelToMovieList(nowPlayingModel.results)
 
         updateView()
-        //        NowPlayingMOHandler.saveCurrentMovieList(dataModel.movieList, moc: managedObjectContext)
     }
 
     func handlePageDetails(nowPlayingModel: LatestMoviesResponseModel) {
@@ -95,8 +81,6 @@ public class NowPlayingViewModel: MovieListViewModelProtocol {
     }
 
     func updateViewWithCachedMovieList() {
-        //        let movieModelList = NowPlayingMOHandler.fetchSavedNowPlayingMovieList(in: managedObjectContext)
-        //        addMovieInfoModelToMovieList(movieModelList)
         updateView()
     }
 
@@ -125,16 +109,16 @@ public class NowPlayingViewModel: MovieListViewModelProtocol {
 
 // MARK: - Pagination
 extension NowPlayingViewModel {
-    func checkAndHandleIfPaginationRequired(at row: Int) {
-        //        if (row + 1 == dataModel.movieList.count) && (dataModel.currentPageNumber != dataModel.totalPages) {
-        //            handlePaginationRequired()
-        //        }
+    func checkAndHandleIfPaginationRequired(at row: Int) async {
+        if (row + 1 == dataModel.movieList.count) && (dataModel.currentPageNumber != dataModel.totalPages) {
+            await handlePaginationRequired()
+        }
     }
 
-    func handlePaginationRequired() {
-        //        if !isLoading && dataModel.currentPageNumber != 0 {
-        //            isLoading = true
-        //            fetchNextPageNowPlayingData()
-        //        }
+    func handlePaginationRequired() async {
+        if !isLoading && dataModel.currentPageNumber != 0 {
+            isLoading = true
+            await fetchNowPlayingData()
+        }
     }
 }

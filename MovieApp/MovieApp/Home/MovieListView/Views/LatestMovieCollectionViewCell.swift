@@ -32,7 +32,6 @@ class LatestMovieCollectionViewCell: UICollectionViewCell {
             view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
             view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            view.heightAnchor.constraint(equalToConstant: 100)
         ])
 
         movieInfoView = view
