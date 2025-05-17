@@ -23,104 +23,86 @@ class NowPlayingViewDataModel {
 
 // MARK: - ViewModel
 public class MovieListViewModel: MovieListViewModelProtocol {
-    
+
     weak var viewController: MovieListViewControllerProtocol?
+    var isPaginating: Bool = false
+    private var isLoading: Bool = false
 
-    private var isLoading: Bool
-    private let dataModel: NowPlayingViewDataModel
-    private let managedObjectContext: NSManagedObjectContext
-    private lazy var networkManager: NetworkManager = {
-        return NetworkManager()
-    }()
-    
-    var isPaginating: Bool
+    private let context: NSManagedObjectContext
+    private var dataModel = NowPlayingViewDataModel()
+    private let networkManager: NetworkManager
 
-    init(_ moc: NSManagedObjectContext) {
-        dataModel = NowPlayingViewDataModel()
-        managedObjectContext = moc
+    init(context: NSManagedObjectContext, networkManager: NetworkManager = NetworkManager()) {
+        self.context = context
+        self.networkManager = networkManager
+    }
+
+    public func loadViewInitialData() async {
+        await fetchNowPlayingData(for: 1)
+    }
+
+    private func fetchNowPlayingData(for page: Int) async {
+        guard !isLoading else { return }
         isLoading = true
-        isPaginating = false
-    }
-    
-    func fetchNowPlayingData() async {
+        defer { isLoading = false }
+
         do {
-            let nowPlayingModel = try await networkManager.fetchLatestMovies(page: 1)
-            handleNowPlayingResult(nowPlayingModel: nowPlayingModel)
+            let result = try await networkManager.fetchLatestMovies(page: page)
+            handleNowPlayingResult(result)
         } catch {
-            // TODO: Alert: Error occurred with possible refresh option
-            print("Failed to fetch: \(error)")
-            updateViewWithCachedMovieList()
-        }
-    }
-    
-    func loadViewInitialData() async {
-        await fetchNowPlayingData()
-    }
-
-    func handleNowPlayingResult(nowPlayingModel: LatestMoviesResponseModel) {
-        handlePageDetails(nowPlayingModel: nowPlayingModel)
-        addMovieInfoModelToMovieList(nowPlayingModel.results)
-
-        updateView()
-    }
-
-    func handlePageDetails(nowPlayingModel: LatestMoviesResponseModel) {
-        updateLastFetchedPageNumber(nowPlayingModel)
-    }
-    
-    func addMovieInfoModelToMovieList(_ modelList: [MovieInfoModel]) {
-        for movieInfoModel in modelList {
-            dataModel.movieList.append(movieInfoModel)
+            print("❌ Fetch error: \(error)")
+            loadCachedDataIfAvailable()
         }
     }
 
-    func updateLastFetchedPageNumber(
-        _ nowPlayingModel: LatestMoviesResponseModel
-    ) {
-        dataModel.currentPageNumber = nowPlayingModel.page
-        dataModel.totalPages = nowPlayingModel.totalPages
-        print("\(dataModel.currentPageNumber) out of \(dataModel.totalPages)")
-    }
-
-    func updateViewWithCachedMovieList() {
-        updateView()
-    }
-
-    func updateView() {
-        isLoading = false
+    private func handleNowPlayingResult(_ result: LatestMoviesResponseModel) {
+        dataModel.currentPageNumber = result.page
+        dataModel.totalPages = result.totalPages
+        dataModel.movieList.append(contentsOf: result.results)
         viewController?.updateView()
     }
 
-    // MARK: MovieListViewModelProtocol
-    func didTap() {
-        // Does nothing
+    private func loadCachedDataIfAvailable() {
+        viewController?.updateView()
     }
 
-    func moviesCount() -> Int {
-        return dataModel.movieList.count
+    public func didTap() {}
+
+    public func moviesCount() -> Int {
+        dataModel.movieList.count
     }
 
     func movieInfoModel(at index: Int) -> MovieInfoModel? {
+        guard index >= 0 && index < dataModel.movieList.count else { return nil }
         return dataModel.movieList[index]
     }
 
-    func currentMOC() -> NSManagedObjectContext {
-        return managedObjectContext
+    public func currentMOC() -> NSManagedObjectContext {
+        context
+    }
+
+    public func checkAndHandleIfPaginationRequired(at row: Int) async {
+        guard row == dataModel.movieList.count - 1,
+              dataModel.currentPageNumber < dataModel.totalPages else { return }
+
+        isPaginating = true
+        await fetchNowPlayingData(for: dataModel.currentPageNumber + 1)
+        isPaginating = false
     }
 }
 
-// MARK: - Pagination
-extension MovieListViewModel {
-    func checkAndHandleIfPaginationRequired(at row: Int) async {
-        if (row + 1 == dataModel.movieList.count) && (dataModel.currentPageNumber != dataModel.totalPages) {
-            await handlePaginationRequired()
-        }
-    }
-
-    func handlePaginationRequired() async {
-        if !isLoading && dataModel.currentPageNumber != 0 {
-            isLoading = true
-            await fetchNowPlayingData()
-        }
-    }
-}
+//MARK: - Pagination
+//extension MovieListViewModel {
+//    func checkAndHandleIfPaginationRequired(at row: Int) async {
+//        if (row + 1 == dataModel.movieList.count) && (dataModel.currentPageNumber != dataModel.totalPages) {
+//            await handlePaginationRequired()
+//        }
+//    }
+//
+//    func handlePaginationRequired() async {
+//        if !isLoading && dataModel.currentPageNumber != 0 {
+//            isLoading = true
+//            await fetchNowPlayingData(for: dataModel.currentPageNumber + 1)
+//        }
+//    }
+//}

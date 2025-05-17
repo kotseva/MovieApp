@@ -13,7 +13,7 @@ class HomeTabBarController: UITabBarController {
     init(_ viewContext: NSManagedObjectContext) {
         super.init(nibName: nil, bundle: nil)
 
-        let latestMoviesVC = LatestMoviesViewController(viewContext)
+        let latestMoviesVC = LatestMoviesViewController(context: viewContext)
 
         let latestMoviesTabBarItem = UITabBarItem(
             title: "Latest Movies",

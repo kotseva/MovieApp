@@ -18,8 +18,8 @@ class MovieListViewController: UIViewController {
     private var collectionView: UICollectionView!
 
     /// Initializes with a default dummy view model.
-    public init(_ managedObjectContext: NSManagedObjectContext) {
-        self.viewModel = DummyMovieListViewModel()
+    init(viewModel: MovieListViewModelProtocol) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
 
