@@ -90,19 +90,3 @@ public class MovieListViewModel: MovieListViewModelProtocol {
         isPaginating = false
     }
 }
-
-//MARK: - Pagination
-//extension MovieListViewModel {
-//    func checkAndHandleIfPaginationRequired(at row: Int) async {
-//        if (row + 1 == dataModel.movieList.count) && (dataModel.currentPageNumber != dataModel.totalPages) {
-//            await handlePaginationRequired()
-//        }
-//    }
-//
-//    func handlePaginationRequired() async {
-//        if !isLoading && dataModel.currentPageNumber != 0 {
-//            isLoading = true
-//            await fetchNowPlayingData(for: dataModel.currentPageNumber + 1)
-//        }
-//    }
-//}
