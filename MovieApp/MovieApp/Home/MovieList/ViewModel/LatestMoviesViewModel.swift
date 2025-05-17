@@ -42,7 +42,7 @@ public class NowPlayingViewModel: MovieListViewModelProtocol {
     
     func fetchNowPlayingData() async {
         do {
-            let nowPlayingModel = try await networkManager.fetchNowPlaying(page: 1)
+            let nowPlayingModel = try await networkManager.fetchLatestMovies(page: 1)
             handleNowPlayingResult(nowPlayingModel: nowPlayingModel)
         } catch {
             // TODO: Alert: Error occurred with possible refresh option
