@@ -12,7 +12,7 @@ import SwiftUI
 class LatestMoviesViewController: MovieListViewController {
     override init(_ managedObjectContext: NSManagedObjectContext) {
         super.init(managedObjectContext)
-        viewModel = NowPlayingViewModel(managedObjectContext)
+        viewModel = MovieListViewModel(managedObjectContext)
         viewModel.viewController = self
     }
     

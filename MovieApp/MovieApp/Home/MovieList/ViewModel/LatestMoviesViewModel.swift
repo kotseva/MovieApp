@@ -8,7 +8,7 @@
 import CoreData
 import Foundation
 
-// MARK:- DataModel
+// MARK: - DataModel
 class NowPlayingViewDataModel {
     var movieList: [MovieInfoModel]
     var currentPageNumber: Int
@@ -22,16 +22,18 @@ class NowPlayingViewDataModel {
 }
 
 // MARK: - ViewModel
-public class NowPlayingViewModel: MovieListViewModelProtocol {
-    var isPaginating: Bool
+public class MovieListViewModel: MovieListViewModelProtocol {
     
     weak var viewController: MovieListViewControllerProtocol?
+
     private var isLoading: Bool
     private let dataModel: NowPlayingViewDataModel
     private let managedObjectContext: NSManagedObjectContext
     private lazy var networkManager: NetworkManager = {
         return NetworkManager()
     }()
+    
+    var isPaginating: Bool
 
     init(_ moc: NSManagedObjectContext) {
         dataModel = NowPlayingViewDataModel()
@@ -108,7 +110,7 @@ public class NowPlayingViewModel: MovieListViewModelProtocol {
 }
 
 // MARK: - Pagination
-extension NowPlayingViewModel {
+extension MovieListViewModel {
     func checkAndHandleIfPaginationRequired(at row: Int) async {
         if (row + 1 == dataModel.movieList.count) && (dataModel.currentPageNumber != dataModel.totalPages) {
             await handlePaginationRequired()

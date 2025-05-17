@@ -7,6 +7,7 @@
 
 import Foundation
 
+/* A protocol for updating the movie list view, typically implemented by a view controller. */
 protocol MovieListViewControllerProtocol: AnyObject {
     func updateView()
 }

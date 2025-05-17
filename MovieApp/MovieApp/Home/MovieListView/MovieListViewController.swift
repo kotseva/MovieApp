@@ -9,6 +9,7 @@ import CoreData
 import Foundation
 import SwiftUI
 
+/// Base view controller displaying a list of movies using a collection view.
 class MovieListViewController: UIViewController {
     var viewModel: MovieListViewModelProtocol
     private let cellReuseIdentifier = "NowPlayingCollectionViewCell"
@@ -16,6 +17,7 @@ class MovieListViewController: UIViewController {
     private let homeTabView = UIView()
     private var collectionView: UICollectionView!
 
+    /// Initializes with a default dummy view model.
     public init(_ managedObjectContext: NSManagedObjectContext) {
         self.viewModel = DummyMovieListViewModel()
         super.init(nibName: nil, bundle: nil)
@@ -24,7 +26,9 @@ class MovieListViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
+    // MARK: - View Lifecycle
+    // Setup UI and trigger initial data load
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBackgroundView()
@@ -32,7 +36,7 @@ class MovieListViewController: UIViewController {
         setupCollectionView()
 
         Task { @MainActor in
-            await viewModel.loadViewInitialData()
+            await viewModel.loadViewInitialData() // Loads data when view appears
         }
     }
 
@@ -82,6 +86,7 @@ class MovieListViewController: UIViewController {
     }
 }
 
+// MARK: - UICollectionViewDelegate, DataSource, Layout
 extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MovieListViewControllerProtocol {
     func updateView() {
         DispatchQueue.main.async { [self] in
@@ -105,6 +110,7 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
         return cell
     }
     
+    // Triggers pagination when scrolling near the bottom of the list
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
@@ -117,6 +123,7 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
         }
     }
 
+    // Defines the size for each cell in the collection view
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.bounds.width - 20
         return CGSize(width: width, height: 100)
