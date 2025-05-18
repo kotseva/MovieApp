@@ -128,5 +128,13 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
         let width = collectionView.bounds.width - 20
         return CGSize(width: width, height: 100)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let movieModel = viewModel.movieInfoModel(at: indexPath.row) {
+            let detailVC = MovieDetailsViewController(nibName: "MovieDetailsViewController", bundle: nil)
+            detailVC.viewModel = movieModel
+            navigationController?.pushViewController(detailVC, animated: true)
+        }
+    }
 }
 

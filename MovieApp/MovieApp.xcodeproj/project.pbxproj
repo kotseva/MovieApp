@@ -33,12 +33,17 @@
 		2F8A71252DD6971600C3CA30 /* MovieAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		2F8A710F2DD6971400C3CA30 /* MovieApp */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = MovieApp;
-			sourceTree = "<group>";
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		2F88BC4F2DDA41FA002B45E8 /* Exceptions for "MovieApp" folder in "MovieApp" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 2F8A710C2DD6971400C3CA30 /* MovieApp */;
 		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
 		2F8A711E2DD6971600C3CA30 /* MovieAppTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = MovieAppTests;
@@ -47,6 +52,14 @@
 		2F8A71282DD6971600C3CA30 /* MovieAppUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = MovieAppUITests;
+			sourceTree = "<group>";
+		};
+		2FEAC0812DD9E37400968FE3 /* MovieApp */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				2F88BC4F2DDA41FA002B45E8 /* Exceptions for "MovieApp" folder in "MovieApp" target */,
+			);
+			path = MovieApp;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -87,7 +100,7 @@
 		2F8A71042DD6971400C3CA30 = {
 			isa = PBXGroup;
 			children = (
-				2F8A710F2DD6971400C3CA30 /* MovieApp */,
+				2FEAC0812DD9E37400968FE3 /* MovieApp */,
 				2F8A711E2DD6971600C3CA30 /* MovieAppTests */,
 				2F8A71282DD6971600C3CA30 /* MovieAppUITests */,
 				2F57CE082DD9264C00780168 /* Frameworks */,
@@ -122,7 +135,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				2F8A710F2DD6971400C3CA30 /* MovieApp */,
+				2FEAC0812DD9E37400968FE3 /* MovieApp */,
 			);
 			name = MovieApp;
 			packageProductDependencies = (
@@ -439,6 +452,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MovieApp/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -479,6 +493,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MovieApp/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

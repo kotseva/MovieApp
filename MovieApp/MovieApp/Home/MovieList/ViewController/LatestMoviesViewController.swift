@@ -21,15 +21,3 @@ class LatestMoviesViewController: MovieListViewController
         fatalError("init(coder:) has not been implemented")
     }
 }
-
-//class LatestMoviesViewController: MovieListViewController {
-//    override init(_ managedObjectContext: NSManagedObjectContext) {
-//        super.init(managedObjectContext)
-//        viewModel = MovieListViewModel(context: managedObjectContext)
-//        viewModel.viewController = self
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//}
