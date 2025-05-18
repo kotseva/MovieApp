@@ -14,7 +14,7 @@ protocol MovieListViewModelProtocol: AnyObject {
     var isPaginating: Bool { get set }
     
     func didTap()
-    func loadViewInitialData() async
+    func loadViewInitialData() async throws
     func moviesCount() -> Int
     func movieInfoModel(at index: Int) -> MovieInfoModel?
     func currentMOC() -> NSManagedObjectContext

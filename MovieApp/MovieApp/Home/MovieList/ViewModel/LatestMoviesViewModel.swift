@@ -37,7 +37,7 @@ public class MovieListViewModel: MovieListViewModelProtocol {
         self.networkManager = networkManager
     }
 
-    public func loadViewInitialData() async {
+    public func loadViewInitialData() async throws {
         await fetchNowPlayingData(for: 1)
     }
 
