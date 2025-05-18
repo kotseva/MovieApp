@@ -34,9 +34,15 @@ class MovieListViewController: UIViewController {
         setupBackgroundView()
         setupHomeTabView()
         setupCollectionView()
-
+        
         Task { @MainActor in
-            await viewModel.loadViewInitialData() // Loads data when view appears
+            do {
+                try await viewModel.loadViewInitialData()
+            } catch {
+                // Handle the error: show an alert or log it
+                showAlert(with: "Failed to load movies. Please try again.")
+                print("Error loading initial data: \(error)")
+            }
         }
     }
 
@@ -46,7 +52,7 @@ class MovieListViewController: UIViewController {
     }
 
     private func setupBackgroundView() {
-        view.backgroundColor = .white
+        view.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
     }
 
     private func setupHomeTabView() {
@@ -55,13 +61,16 @@ class MovieListViewController: UIViewController {
         view.addSubview(homeTabView)
 
         NSLayoutConstraint.activate([
-            homeTabView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            homeTabView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             homeTabView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             homeTabView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             homeTabView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 
+    /* Configures the collection view that displays movie items,
+     sets its delegate, data source, appearance,
+     registers the cell class, and adds it to the container view. */
     private func setupCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -84,15 +93,18 @@ class MovieListViewController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: homeTabView.bottomAnchor)
         ])
     }
+    
+    /* Shows an alert with a given message.
+     - Parameter message: The message string to display in the alert. */
+    private func showAlert(with message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
 }
 
-// MARK: - UICollectionViewDelegate, DataSource, Layout
+// MARK: - UICollectionViewDelegate, DataSource, Layout Methods
 extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MovieListViewControllerProtocol {
-    func updateView() {
-        DispatchQueue.main.async { [self] in
-            collectionView.reloadData()
-        }
-    }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.moviesCount()
@@ -134,6 +146,12 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
             let detailVC = MovieDetailsViewController(nibName: "MovieDetailsViewController", bundle: nil)
             detailVC.viewModel = movieModel
             navigationController?.pushViewController(detailVC, animated: true)
+        }
+    }
+    
+    func updateView() {
+        DispatchQueue.main.async { [weak self] in
+            self?.collectionView.reloadData()
         }
     }
 }

@@ -12,6 +12,7 @@ class MovieDetailsViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ratingLabel: UILabel!
+    @IBOutlet weak var releaseDate: UILabel!
     @IBOutlet weak var descriptionView: UIView!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var overviewLabel: UILabel!
@@ -35,14 +36,11 @@ class MovieDetailsViewController: UIViewController {
         view.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
         title = "Movie Details"
         
-        
         // Image
-        imageView.contentMode = .scaleAspectFit
+        ImageHelper.setupImageForView(imageView, imagePath: viewModel.posterPath)
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 10
-        //        if let url = URL(string: movieImageURL) {
-        //            downloadImage(from: url)
-        //        }
         
         // Title
         titleLabel.text = viewModel.title
@@ -53,6 +51,12 @@ class MovieDetailsViewController: UIViewController {
         ratingLabel.text = "⭐️ \(String(format: "%.1f", viewModel.voteAverage))"
         ratingLabel.font = UIFont(name: Fonts.interRegular, size: 16)
         ratingLabel.textColor = .gray
+        
+        //Release Date
+        releaseDate.text = "Release date:\n\(viewModel.formattedReleaseDate)"
+        releaseDate.font = UIFont(name: Fonts.interRegular, size: 16)
+        releaseDate.numberOfLines = 0
+        
         
         // Description
         descriptionView.layer.cornerRadius = 10
@@ -65,6 +69,7 @@ class MovieDetailsViewController: UIViewController {
         
         // Description
         descriptionLabel.text = viewModel.overview
+
         descriptionLabel.font = UIFont(name: Fonts.interRegular, size: 16)
         descriptionLabel.numberOfLines = 0
         descriptionLabel.textAlignment = .left

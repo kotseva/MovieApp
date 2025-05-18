@@ -21,7 +21,8 @@ class LatestMovieCollectionViewCell: UICollectionViewCell {
 
     /// Configures the cell with a movie model.
     func configure(with movieModel: MovieInfoModel) {
-        backgroundColor = .clear
+        backgroundColor = .white
+        layer.cornerRadius = 10
         setupMovieInfoView(with: movieModel)
     }
 
@@ -32,10 +33,10 @@ class LatestMovieCollectionViewCell: UICollectionViewCell {
 
         contentView.addSubview(view)
         NSLayoutConstraint.activate([
-            view.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
-            view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
-            view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            view.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+            view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
         ])
 
         movieInfoView = view

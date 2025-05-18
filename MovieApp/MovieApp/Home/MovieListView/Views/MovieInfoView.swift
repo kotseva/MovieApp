@@ -26,6 +26,7 @@ class MovieInfoView: UIView {
     private lazy var movieImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.layer.cornerRadius = 8
         
         self.addSubview(imageView)
         imageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true

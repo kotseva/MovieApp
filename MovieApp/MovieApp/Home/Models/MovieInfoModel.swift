@@ -17,4 +17,15 @@ class MovieInfoModel: Codable {
     let title: String
     let overview: String
     
+    var formattedReleaseDate: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        
+        if let date = formatter.date(from: releaseDate) {
+            formatter.dateFormat = "d MMM yyyy"
+            return formatter.string(from: date)
+        } else {
+            return releaseDate
+        }
+    }
 }

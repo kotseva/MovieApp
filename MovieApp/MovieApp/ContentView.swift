@@ -17,10 +17,11 @@ struct ContentView: UIViewControllerRepresentable {
             rootViewController: tabBarController
         )
         navController.setNavigationBarHidden(true, animated: false)
+        navController.overrideUserInterfaceStyle = .light
         navController.delegate = context.coordinator
         return navController
     }
-    
+
     func updateUIViewController(
         _ uiViewController: UINavigationController,
         context: Context
@@ -36,7 +37,7 @@ struct ContentView: UIViewControllerRepresentable {
             willShow viewController: UIViewController,
             animated: Bool
         ) {
-            
+
             let shouldHide = viewController is HomeTabBarController
             navigationController.setNavigationBarHidden(
                 shouldHide,
