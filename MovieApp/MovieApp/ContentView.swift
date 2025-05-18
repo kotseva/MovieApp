@@ -9,16 +9,15 @@ import SwiftUI
 
 struct ContentView: UIViewControllerRepresentable {
 
-    @Environment(\.managedObjectContext) private var viewContext
-
     func makeUIViewController(context: Context) -> UINavigationController {
-        let tabBarController = HomeTabBarController(viewContext)
+        let tabBarController = HomeTabBarController()
         let navController = UINavigationController(
             rootViewController: tabBarController
         )
         navController.setNavigationBarHidden(true, animated: false)
         navController.overrideUserInterfaceStyle = .light
         navController.delegate = context.coordinator
+        
         return navController
     }
 

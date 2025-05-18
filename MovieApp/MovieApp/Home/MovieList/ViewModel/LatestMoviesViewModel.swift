@@ -5,7 +5,6 @@
 //  Created by Angela Koceva on 16.5.25.
 //
 
-import CoreData
 import Foundation
 
 // MARK: - DataModel
@@ -28,12 +27,10 @@ public class MovieListViewModel: MovieListViewModelProtocol {
     var isPaginating: Bool = false
     private var isLoading: Bool = false
 
-    private let context: NSManagedObjectContext
     private var dataModel = NowPlayingViewDataModel()
     private let networkManager: NetworkManager
 
-    init(context: NSManagedObjectContext, networkManager: NetworkManager = NetworkManager()) {
-        self.context = context
+    init(networkManager: NetworkManager = NetworkManager()) {
         self.networkManager = networkManager
     }
 
@@ -75,10 +72,6 @@ public class MovieListViewModel: MovieListViewModelProtocol {
     func movieInfoModel(at index: Int) -> MovieInfoModel? {
         guard index >= 0 && index < dataModel.movieList.count else { return nil }
         return dataModel.movieList[index]
-    }
-
-    public func currentMOC() -> NSManagedObjectContext {
-        context
     }
 
     public func checkAndHandleIfPaginationRequired(at row: Int) async {

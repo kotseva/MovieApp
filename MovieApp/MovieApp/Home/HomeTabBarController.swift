@@ -5,7 +5,6 @@
 //  Created by Angela Koceva on 16.5.25.
 //
 
-import CoreData
 import Foundation
 import SwiftUI
 
@@ -13,10 +12,10 @@ class HomeTabBarController: UITabBarController {
     
     let appearance = UITabBarAppearance()
     
-    init(_ viewContext: NSManagedObjectContext) {
+    init() {
         super.init(nibName: nil, bundle: nil)
         
-        let latestMoviesVC = LatestMoviesViewController(context: viewContext)
+        let latestMoviesVC = LatestMoviesViewController()
         
         let latestMoviesTabBarItem = UITabBarItem(
             title: "Latest Movies",

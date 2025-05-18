@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import CoreData
 
 protocol MovieListViewModelProtocol: AnyObject {
     
@@ -17,6 +16,5 @@ protocol MovieListViewModelProtocol: AnyObject {
     func loadViewInitialData() async throws
     func moviesCount() -> Int
     func movieInfoModel(at index: Int) -> MovieInfoModel?
-    func currentMOC() -> NSManagedObjectContext
     func checkAndHandleIfPaginationRequired(at row: Int) async
 }

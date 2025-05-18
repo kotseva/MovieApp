@@ -6,13 +6,12 @@
 //
 
 import Foundation
-import CoreData
 import SwiftUI
 
 class LatestMoviesViewController: MovieListViewController
 {
-    init(context: NSManagedObjectContext) {
-        let viewModel = MovieListViewModel(context: context)
+    init() {
+        let viewModel = MovieListViewModel()
         super.init(viewModel: viewModel)
         viewModel.viewController = self
     }

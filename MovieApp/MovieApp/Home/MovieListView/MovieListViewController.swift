@@ -5,7 +5,6 @@
 //  Created by Angela Koceva on 16.5.25.
 //
 
-import CoreData
 import Foundation
 import SwiftUI
 
