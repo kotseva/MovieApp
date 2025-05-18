@@ -1,0 +1,15 @@
+//
+//  Production.xcconfig
+//  MovieApp
+//
+//  Created by Angela Koceva on 15.5.25.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project
+
+ROOT_URL = api.themoviedb.org
+API_KEY = e21adeb0c517150eea2bac95f40cd702
+
+// Will be used only to print currently used scheme
+ENVIRONMENT = production

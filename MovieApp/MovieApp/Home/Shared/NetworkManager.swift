@@ -28,7 +28,7 @@ public class NetworkManager {
     func fetchLatestMovies(page: Int) async throws -> LatestMoviesResponseModel {
         guard
             var components = URLComponents(
-                string: "https://api.themoviedb.org/3/movie/now_playing"
+                string: "https://\(Environment.rootURL)/3/movie/now_playing"
             )
         else {
             throw URLError(.badURL)
@@ -37,7 +37,7 @@ public class NetworkManager {
         components.queryItems = [
             URLQueryItem(
                 name: "api_key",
-                value: "e21adeb0c517150eea2bac95f40cd702"
+                value: "\(Environment.apiKey)"
             ),
             URLQueryItem(name: "language", value: "en-US"),
             URLQueryItem(name: "page", value: "\(page)"),
@@ -47,7 +47,8 @@ public class NetworkManager {
             throw URLError(.badURL)
         }
         
-        print("URL: \(url.absoluteString)")
+        print("URL: \(Environment.rootURL)")
+
         
         // Create and configure the URLRequest.
         var request = URLRequest(url: url)

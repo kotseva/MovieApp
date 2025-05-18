@@ -43,6 +43,9 @@ class MovieListViewController: UIViewController {
                 print("Error loading initial data: \(error)")
             }
         }
+        
+        //Just checking the current Environment
+        print("Currently is running \(Environment.currentEnvironment)")
     }
 
     override func viewWillAppear(_ animated: Bool) {
