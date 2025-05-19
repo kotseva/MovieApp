@@ -17,16 +17,9 @@ class HomeTabBarController: UITabBarController {
         
         let latestMoviesVC = LatestMoviesViewController()
         
-        let latestMoviesTabBarItem = UITabBarItem(
-            title: "Latest Movies",
-            image: UIImage(systemName: "play.fill"),
-            tag: 0
-        )
-        
-        latestMoviesVC.tabBarItem = latestMoviesTabBarItem
+        //TODO: - Remove the tabbar and reorganize the constraints
         latestMoviesVC.tabBarItem.standardAppearance = appearance
         
-        //TODO: Add the tabbar item
         self.viewControllers = [latestMoviesVC]
     }
     
