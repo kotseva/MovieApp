@@ -12,4 +12,4 @@ ROOT_URL = api.themoviedb.org
 API_KEY = e21adeb0c517150eea2bac95f40cd702
 
 // Will be used only to print currently used scheme
-ENVIRONMENT = production
+CURRENT_ENV = production

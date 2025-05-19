@@ -12,17 +12,35 @@
 		<key>MovieApp(Production).xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>2</integer>
 		</dict>
 		<key>MovieApp.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>3</integer>
+			<integer>1</integer>
 		</dict>
 		<key>SWXMLHashPlayground (Playground).xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>2</integer>
+			<integer>3</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>2F8A710C2DD6971400C3CA30</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2F8A711A2DD6971600C3CA30</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2F8A71242DD6971600C3CA30</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
