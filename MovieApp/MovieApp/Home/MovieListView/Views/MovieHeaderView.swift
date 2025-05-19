@@ -43,7 +43,7 @@ class MovieHeaderView: UIView {
         backgroundView.translatesAutoresizingMaskIntoConstraints = false
         backgroundView.backgroundColor = .white
         
-        // Add subtle shadow to header
+        /// Add subtle shadow to header
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: 0, height: 2)
         layer.shadowRadius = 3
@@ -76,12 +76,12 @@ class MovieHeaderView: UIView {
     private func setupSearchButton() {
         searchButton.translatesAutoresizingMaskIntoConstraints = false
         
-        // Use SF Symbol for search icon
+        /// Use SF Symbol for search icon
         if #available(iOS 13.0, *) {
             let symbolConfig = UIImage.SymbolConfiguration(pointSize: 18, weight: .medium)
             searchButton.setImage(UIImage(systemName: "magnifyingglass", withConfiguration: symbolConfig), for: .normal)
         } else {
-            // Fallback for earlier iOS versions
+            /// Fallback for earlier iOS versions
             searchButton.setTitle("🔍", for: .normal)
         }
         
@@ -103,12 +103,12 @@ class MovieHeaderView: UIView {
     private func setupFilterButton() {
         filterButton.translatesAutoresizingMaskIntoConstraints = false
         
-        // Use SF Symbol for filter icon
+        /// Use SF Symbol for filter icon
         if #available(iOS 13.0, *) {
             let symbolConfig = UIImage.SymbolConfiguration(pointSize: 18, weight: .medium)
             filterButton.setImage(UIImage(systemName: "line.horizontal.3.decrease", withConfiguration: symbolConfig), for: .normal)
         } else {
-            // Fallback for earlier iOS versions
+            /// Fallback for earlier iOS versions
             filterButton.setTitle("≡", for: .normal)
         }
         
@@ -142,7 +142,7 @@ class MovieHeaderView: UIView {
     }
     
     private func updateHeaderConstraints() {
-        // Add additional top padding for dynamic island
+        /// Add additional top padding for dynamic island
         if additionalTopPadding > 0 {
             // Create or update top padding constraint
             for constraint in constraints {
@@ -152,7 +152,7 @@ class MovieHeaderView: UIView {
                 }
             }
             
-            // Add height constraint if not found
+            /// Add height constraint if not found
             heightAnchor.constraint(equalToConstant: 60 + additionalTopPadding).isActive = true
         }
     }

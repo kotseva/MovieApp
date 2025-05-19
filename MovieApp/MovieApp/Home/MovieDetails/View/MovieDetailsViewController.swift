@@ -67,33 +67,33 @@ class MovieDetailsViewController: UIViewController, UIScrollViewDelegate {
     }
     
     private func setupMovieInfo() {
-        // Title
+        /// Title
         titleLabel.text = viewModel.title
         titleLabel.font = UIFont(name: Fonts.interBold, size: 24)
         titleLabel.numberOfLines = 0
         
-        // Rating
+        /// Rating
         ratingLabel.text = "⭐️ \(String(format: "%.1f", viewModel.voteAverage))"
         ratingLabel.font = UIFont(name: Fonts.interRegular, size: 16)
         ratingLabel.textColor = .gray
         
-        // Release Date
+        /// Release Date
         releaseDate.text = "Release date:\n\(viewModel.formattedReleaseDate)"
         releaseDate.font = UIFont(name: Fonts.interRegular, size: 16)
         releaseDate.numberOfLines = 0
     }
     
     private func setupDescriptionSection() {
-        // Container styling
+        /// Container styling
         descriptionView.layer.cornerRadius = 10
         stackView.spacing = 20
         stackView.backgroundColor = .clear
         
-        // Overview heading
+        /// Overview heading
         overviewLabel.text = "Overview"
         overviewLabel.font = UIFont(name: Fonts.interSemiBold, size: 18)
         
-        // Description content
+        /// Description content
         descriptionLabel.text = viewModel.overview
         descriptionLabel.font = UIFont(name: Fonts.interRegular, size: 16)
         descriptionLabel.numberOfLines = 0
@@ -102,7 +102,7 @@ class MovieDetailsViewController: UIViewController, UIScrollViewDelegate {
     
     // MARK: - Animations
     private func animateContent() {
-        // Fade in elements with slight delay between each
+        /// Fade in elements with slight delay between each
         let elements = [imageView, titleLabel, ratingLabel, releaseDate, descriptionView]
         let initialAlpha: CGFloat = 0.0
         

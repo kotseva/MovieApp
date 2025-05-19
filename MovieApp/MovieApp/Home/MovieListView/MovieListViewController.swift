@@ -201,7 +201,7 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
         if let movieModel = viewModel.movieInfoModel(at: indexPath.row) {
             cell.configure(with: movieModel)
             
-            // Apply shadow and additional styling to cells
+            /// Apply shadow and additional styling to cells
             cell.layer.shadowColor = UIColor.black.cgColor
             cell.layer.shadowOffset = CGSize(width: 0, height: 2)
             cell.layer.shadowRadius = 4
@@ -213,7 +213,7 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        // Add animation for cells appearing
+        /// Add animation for cells appearing
         cell.alpha = 0
         cell.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
         
@@ -228,7 +228,7 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
         let contentHeight = scrollView.contentSize.height
         let height = scrollView.frame.size.height
 
-        // Trigger pagination when user scrolls near the bottom
+        /// Trigger pagination when user scrolls near the bottom
         if offsetY > contentHeight - height * 1.5 {
             Task {
                 await viewModel.checkAndHandleIfPaginationRequired(at: viewModel.moviesCount() - 1)
@@ -252,14 +252,12 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
         collectionView.deselectItem(at: indexPath, animated: true)
         
         if let cell = collectionView.cellForItem(at: indexPath) {
-            // Add selection feedback animation
             UIView.animate(withDuration: 0.15, animations: {
                 cell.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
             }) { _ in
                 UIView.animate(withDuration: 0.15) {
                     cell.transform = CGAffineTransform.identity
                 } completion: { _ in
-                    // Navigate to details view
                     if let movieModel = self.viewModel.movieInfoModel(at: indexPath.row) {
                         let detailVC = MovieDetailsViewController(nibName: "MovieDetailsViewController", bundle: nil)
                         detailVC.viewModel = movieModel
