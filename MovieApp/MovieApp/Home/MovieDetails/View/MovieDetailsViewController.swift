@@ -6,9 +6,13 @@
 //
 
 import UIKit
+import Kingfisher
 
-class MovieDetailsViewController: UIViewController {
+class MovieDetailsViewController: UIViewController, UIScrollViewDelegate {
     
+    // MARK: - Outlets
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ratingLabel: UILabel!
@@ -18,30 +22,51 @@ class MovieDetailsViewController: UIViewController {
     @IBOutlet weak var overviewLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     
+    // MARK: - Properties
     var viewModel: MovieInfoModel!
-
+    private let backgroundColors = AppColors.background.self
+    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setupNavigationBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIView.animate(withDuration: 1.5, animations: {
-        })
+        animateContent()
     }
     
+    // MARK: - UI Setup
     private func setupUI() {
-        view.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)
+        setupBackgroundAndNavigation()
+        setupScrollView()
+        setupImageView()
+        setupMovieInfo()
+        setupDescriptionSection()
+    }
+    
+    private func setupScrollView() {
+        scrollView.delegate = self
+        scrollView.isScrollEnabled = true
+        scrollView.showsVerticalScrollIndicator = true
+        scrollView.alwaysBounceVertical = true
+    }
+    
+    private func setupBackgroundAndNavigation() {
         title = "Movie Details"
-        
-        // Image
+        view.backgroundColor = backgroundColors.primary
+        navigationController?.navigationBar.prefersLargeTitles = false
+    }
+    
+    private func setupImageView() {
         ImageHelper.setupImageForView(imageView, imagePath: viewModel.posterPath)
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 10
-        
+    }
+    
+    private func setupMovieInfo() {
         // Title
         titleLabel.text = viewModel.title
         titleLabel.font = UIFont(name: Fonts.interBold, size: 24)
@@ -52,32 +77,54 @@ class MovieDetailsViewController: UIViewController {
         ratingLabel.font = UIFont(name: Fonts.interRegular, size: 16)
         ratingLabel.textColor = .gray
         
-        //Release Date
+        // Release Date
         releaseDate.text = "Release date:\n\(viewModel.formattedReleaseDate)"
         releaseDate.font = UIFont(name: Fonts.interRegular, size: 16)
         releaseDate.numberOfLines = 0
-        
-        
-        // Description
+    }
+    
+    private func setupDescriptionSection() {
+        // Container styling
         descriptionView.layer.cornerRadius = 10
         stackView.spacing = 20
         stackView.backgroundColor = .clear
         
-        // Overview
+        // Overview heading
         overviewLabel.text = "Overview"
         overviewLabel.font = UIFont(name: Fonts.interSemiBold, size: 18)
         
-        // Description
+        // Description content
         descriptionLabel.text = viewModel.overview
-
         descriptionLabel.font = UIFont(name: Fonts.interRegular, size: 16)
         descriptionLabel.numberOfLines = 0
         descriptionLabel.textAlignment = .left
     }
     
-    // MARK: - Navigation Bar Setup
-    private func setupNavigationBar() {
-        title = "Movie Details"
-        navigationController?.navigationBar.prefersLargeTitles = false
+    // MARK: - Animations
+    private func animateContent() {
+        // Fade in elements with slight delay between each
+        let elements = [imageView, titleLabel, ratingLabel, releaseDate, descriptionView]
+        let initialAlpha: CGFloat = 0.0
+        
+        elements.forEach { $0?.alpha = initialAlpha }
+        
+        for (index, element) in elements.enumerated() {
+            UIView.animate(
+                withDuration: 0.5,
+                delay: 0.1 * Double(index),
+                options: .curveEaseInOut,
+                animations: {
+                    element?.alpha = 1.0
+                }
+            )
+        }
+    }
+}
+
+// MARK: - Helper Extensions
+extension MovieDetailsViewController {
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        Kingfisher.ImageCache.default.clearMemoryCache()
     }
 }

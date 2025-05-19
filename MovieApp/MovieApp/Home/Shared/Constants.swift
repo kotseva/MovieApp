@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct Fonts {
     static let interRegular = "Inter-Regular"
@@ -17,4 +18,10 @@ struct Fonts {
     static let interBoldItalic = "Inter-BoldItalic"
     static let interMedium = "Inter-Medium"
     static let interMediumItalic = "Inter-MediumItalic"
+}
+
+struct AppColors {
+    struct background {
+        static let primary = UIColor(red: 0.949, green: 0.949, blue: 0.969, alpha: 1.0)
+    }
 }
